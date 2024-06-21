@@ -1,0 +1,29 @@
+#include<stdio.h>
+void main()
+{
+int n,i,arr[50],item,index;
+printf("Enter the total no. of elements");
+scanf("%d",&n);
+printf("Elements are");
+for(i=0;i<n;i++)
+scanf("%d",&arr[i]);
+printf("Enter the element that needs to be searched");
+scanf("%d",&item);
+
+index=linearsearch(arr,n,item);
+if(index==-1)
+printf("Element %d not found",item);
+else
+printf("Element %d found at index %d",item,index);
+}
+
+int linearsearch(int arr[],int n, int item)
+{
+int i=0;
+while(i<n && arr[i]!=item)
+i++;
+if (i<n)
+return i;
+else
+return -1;
+}
