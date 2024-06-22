@@ -1,0 +1,108 @@
+#include<stdio.h>
+ void push(int);
+ int pop();
+ void overflow();
+ void underflow();
+ int pop();
+ void display();
+
+ int stack[10],top=-1,MAX=4;
+
+  int main()
+  {
+	int item,choice,element;
+    	printf("Press 1 for PUSH\n");
+    	printf("Press 2 for POP\n");
+    	printf("Press 3 for STACK OVERFLOW\n");
+    	printf("Press 4 for STACK UNDERFLOW\n");
+    	printf("Press 5 for PEEK\n");
+    	printf("Press 6 to display the stack\n");
+    	printf("Press 7 for QUIT\n");
+	while(1)
+	{   printf("enter choice:\n");
+    	scanf("%d",&choice);
+
+    	switch(choice) //menu driven structure to use Stack
+    {
+      case 1 :printf("enter the element to be inserted\n");
+            	scanf("%d",&item);
+            	push(item);
+            	break;
+    	case 2 :element=pop();
+            	printf("Element %d deleted\n",element);
+            	break;
+    	case 3 :overflow();
+            	break;
+    	case 4 :underflow();
+            	break;
+    	case 5 :printf("Top element = %d\n",stack[top]);
+            	break;
+    	case 6 :display();
+            	break;
+    	case 7 :exit(1);
+    	}
+    }
+ }
+
+ void push(int item){ //Function to insert item in Stack
+	if(top==MAX-1){
+	printf("Stack overflow :/\n");
+	}
+	else{
+	top=top+1;
+	stack[top]=item;
+	}
+ }
+
+ int pop(){ //Function to delete item in stack
+	int item;
+	if(top==-1){
+	printf("Stack underflow :/\n");
+	return;
+	}
+	else{
+	item=stack[top];
+	top=top-1;
+	return item;
+	}
+ }
+
+ void overflow(){ //Function to check if Stack is full
+	if(top==MAX-1){
+	printf("stack overflow\n");
+	}
+	else printf("Elements can be inserted\n");
+ }
+
+ void underflow(){ //Function to check if Stack is empty
+	if(top==-1){
+	printf("stack underflow\n");
+	}
+	else printf("Elements can be inserted\n");
+ }
+
+ void peek(){ //Function to get the top most element in Stack
+   if (top==-1){
+	printf("Stack Underflow\n");
+   }
+   else if (top== MAX-1){
+	printf("Stack Overflow\n");
+   }
+	else{
+	printf("Top Element %d",stack[top]);
+	return stack[top];
+   }
+ }
+
+ void display(){ //Function to display the Stack
+
+	if(top==-1){
+	printf("stack underflow\n");
+	}
+	else{
+    	int i;
+    	for(i=0;i<=top;i++)
+    	printf("%d ",stack[i]);
+    	printf("\n");
+	}
+ }
