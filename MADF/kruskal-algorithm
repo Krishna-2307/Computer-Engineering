@@ -1,0 +1,74 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+const int MAX = 50;
+
+int parent[MAX];
+pair <int, pair<int, int> > p[MAX];
+
+int find_(int i){
+    while(parent[i]!=-1)
+        i=parent[i];
+    return i;
+}
+
+void union_(int j, int k){
+    if(j<k)
+        parent[j]=k;
+    else
+        parent[k]=j;
+}
+
+void kruskal(int vtx, int mst[][3], int edges){
+
+    for(int i=0;i<vtx;i++)
+        parent[i]=-1;
+
+    int a, b, mincost = 0, cnt=0;
+    for(int i=0; i<edges;i++)
+        {
+        int j=find_(a = p[i].second.first);
+        int k=find_(b = p[i].second.second);
+        if(j!=k)
+        {
+            cnt++;
+            mst[cnt][0]=a;
+            mst[cnt][1]=b;
+            mst[cnt][2]=p[i].first;
+            mincost += p[i].first;
+            union_(j,k);
+        }
+    }
+    if(cnt !=vtx-1)
+        cout<<"NO SPANNING TREE", exit(0);
+    else
+        for(int i=1;i<vtx;i++)
+            cout<<mst[i][0]<<" - "<<mst[i][1]<<" : "<<mst[i][2]<<endl;
+        cout<<"MINIMUM COST: "<<mincost;
+}
+
+int main(){
+
+    int edges, cost, vtx, vtx1, vtx2;
+
+    cout<<"Enter TOTAL no. of Verticies: ";
+    cin>>vtx;
+
+    int mst[vtx-1][3];
+
+    cout<<"Enter TOTAL no. of EDGES: ";
+    cin>>edges;
+
+    for(int i=0;i<edges;i++){
+        cout<<"Enter Verticies and cost of the edge "<<i+1<<"eg. <vertex(1), vertex(2), cost>: ";
+        cin>>vtx1>>vtx2>>cost;
+        p[i]= make_pair(cost,make_pair(vtx1,vtx2));
+    }
+
+    sort(p,p+edges);
+
+    kruskal(vtx, mst, edges);
+
+    return 0;
+}
