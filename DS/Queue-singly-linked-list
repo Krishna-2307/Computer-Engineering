@@ -1,83 +1,90 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 struct node {
-int data;
-struct node *link;
+  int data;
+  struct node *link;
 };
+
 struct node *front=NULL;
 struct node *rear=NULL;
-void insert() {
-int x;
-printf("Enter the element \n");
-scanf ("%d",&x);
-struct node *tmp;
-tmp=(struct node *)malloc(sizeof(struct node));
-if (tmp==NULL) //1 {
-printf("No space for dynamic memory allocation /n");
-}
-else { //1.5
-tmp->data=x;
-tmp->link=NULL;
+  void insert() {
+    int x;
+    printf("Enter the element \n");
+    scanf ("%d",&x);
+    struct node *tmp;
+  tmp=(struct node *)malloc(sizeof(struct node));
+  if (tmp==NULL) //1 {
+    printf("No space for dynamic memory allocation /n");
+  }
+  else { //1.5
+  tmp->data=x;
+  tmp->link=NULL;
 if (front==NULL) //2
-{
-front=tmp;
-}
-else{ //2.5
+  {
+    front=tmp;
+  }
+  else{ //2.5
 rear->link=tmp;
 }
-rear=tmp;
-printf("Enter inserted element is %d",x);
+  rear=tmp;
+  printf("Enter inserted element is %d",x);
+  }
 }
-}
+
 void deletion() {
-struct node *p;
-if (front==NULL) {
-printf("Stack Underflow \n"); }
-else {
-printf("%d deleted successully", front->data);
-p=front;
-front=front->link;
-free(p);
+  struct node *p;
+    if (front==NULL) {
+  printf("Stack Underflow \n"); }
+  else {
+    printf("%d deleted successully", front->data);
+    p=front;
+  front=front->link;
+    free(p);
+  }
 }
-}
+
 void peek() {
-if (front==NULL) {
-printf("Queue Underflow");
-}
-printf("\n Element at Front is %d\n", front->data);
-}
+  if (front==NULL) {
+    printf("Queue Underflow");
+  }
+    printf("\n Element at Front is %d\n", front->data);
+  }
+
 void display() {
-struct node *p;
-if (front==NULL) {
-printf("Queue is empty");
-return;
+  struct node *p;
+  if (front==NULL) {
+    printf("Queue is empty");
+  return;
 }
-p=front;
-while(p!=NULL){
-printf("%d \t", p->data);
-p=p->link;
+  p=front;
+    while(p!=NULL){
+   printf("%d \t", p->data);
+    p=p->link;
+  }
 }
-}
+
 int main()
 {
-int choice;
-printf("1:Insert\n 2:Delete\n 3:Peek\n 4.Display\n 5.Exit");
-while(1) {
-printf("\n Enter choice :");
-scanf("%d",&choice);
+  int choice;
+  printf("1:Insert\n 2:Delete\n 3:Peek\n 4.Display\n 5.Exit");
+    while(1) {
+  printf("\n Enter choice :");
+    scanf("%d",&choice);
+
 switch(choice) {
-case 1:insert();
-break;
-case 2:deletion();
-break;
-case 3:peek();
-break;
-case 4:display();
-break;
-case 5:exit(0);
-break;
-default:printf("Invalid Choice \n");
+  case 1:insert();
+    break;
+  case 2:deletion();
+    break;
+  case 3:peek();
+    break;
+  case 4:display();
+    break;
+  case 5:exit(0);
+    break;
+  default:printf("Invalid Choice \n");
+  }
 }
-}
-return 0;
+  return 0;
 }
