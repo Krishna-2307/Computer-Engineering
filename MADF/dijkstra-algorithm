@@ -1,0 +1,78 @@
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+int min_distance(int dist[], bool visited[], int V)
+{
+    int i, min = 999, value = 0;
+    for(i=0; i<V; i++)
+    {
+      if(dist[i]<min && visited[i]!=true)
+     {
+      min = dist[i];
+      value = i;
+     }
+    }
+return value;
+}
+
+void dijkstra(int src, int V, int cost[100][100]) //src- source, V-vertex/node
+{
+    int i, j;
+    int dist[V], u;
+    bool visited[V];
+    string path[V];
+
+    for(i=0; i<V; i++)
+   {
+    dist[i] = 999;
+    visited[i] = false;
+    path[i] = to_string(src);
+   }
+
+  dist[src] = 0;
+  for(u=0; u<V; u++)
+   {
+    u = min_distance(dist, visited, V);
+    visited[u] = true;
+    for(j=0; j<V; j++)
+    {
+     if(!visited[j] && cost[u][j] && dist[j] > dist[u] + cost[u][j])
+     {
+     dist[j] = dist[u] + cost[u][j];
+     path[j] = path[u] + "->"+to_string(j);
+     }
+   }
+  }
+
+ for(i=0; i<V; i++)
+ {
+  if(i!=src && dist[i] == 999)
+  {
+   path[i] = "Does not exist";
+  }
+ }
+
+  cout<<"Source\t\t"<<"Destination\t\t"<<"Cost\t\t"<<"Path\t"<<endl;
+  for(i=0; i<V; i++)
+    {
+      cout<<" "<<src<<"\t\t "<<i<<"\t\t\t"<<dist[i]<<"\t\t"<<path[i]<<endl;
+    }
+ }
+    int main(){
+    int cost[100][100], V, i, j, src;
+ cout<<"Enter the number of verticies: ";
+  cin>>V;
+ cout<<"Enter the cost matrix("<<V<<"*"<<V<<"): ";
+  for(i=0; i<V; i++)
+    {
+  for(j=0; j<V; j++)
+  {
+ cin>>cost[i][j];
+  }
+ }
+cout<<"Enter the source vertex: ";
+  cin>>src;
+ dijkstra(src, V, cost);
+ return 0;
+}
