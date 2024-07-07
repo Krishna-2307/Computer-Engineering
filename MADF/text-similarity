@@ -1,0 +1,84 @@
+#include<iostream>
+#include<string.h>
+#include<algorithm>
+
+using namespace std;
+
+string result;
+
+
+int lgstCmnSubsqnc(string str1, string str2, int len1, int len2)
+{
+    //create a matrix LCS of order (len1+1)*(len2+1) to tabulate values
+    int LCS[len1+1][len2+1];
+
+    //initializing
+    for(int i=0;i<=len1;i++)
+        LCS[i][0]=0;
+    for(int j=0;j<=len2;j++)
+        LCS[0][j]=0;
+
+    //now, start filling the matrix row wise
+    for(int i=1;i<=len1;i++)
+            for(int j=1;j<=len2;j++)
+                {
+
+    //if current character of both strings match
+                if(str1[i-1]==str2[j-1])
+                    LCS[i][j]=1+LCS[i-1][j-1];
+
+                //mismatch
+                else
+                    LCS[i][j]=max(LCS[i-1][j],LCS[i][j-1]);
+                }
+
+        cout<<"\n  ^";
+
+        for(int i=0; i<=len2; i++)
+            cout<<" "<<str2[i];
+        cout<<endl;
+
+        for(int i=0; i<=len1;i++)
+            {
+            if(i)
+                cout<<str1[i-1]<<" ";
+
+            else
+                cout<<"^ ";
+
+            for(int j=0; j<=len2;j++)
+                cout<<LCS[i][j]<<" ";
+            cout<<endl;
+            }
+
+        int i=len1;
+        int j=len2;
+
+        while(i>0 && j>0)
+            {
+            if(str1[i-1]==str2[j-1]){
+                result +=str1[i-1];i--; j--;
+                }
+
+            else if(LCS[j-1][i]==LCS[j][i-1])
+                i--;
+
+            else (LCS[j-1][i]>LCS[j][i-1])? j-- : i--;
+            }
+
+        reverse(result.begin(), result.end());
+        return LCS[len1][len2];
+}
+
+int main()
+{
+    string str1, str2;
+
+    cout<<"Enter first string : "; cin>>str1;
+    cout<<"Enter second string : "; cin>>str2;
+
+    int lgst = lgstCmnSubsqnc(str1, str2, str1.length(), str2.length());
+
+    cout<< "\n Longest common substring is: "<<result<<"\n Length is : "<<lgst;
+    return 0;
+}
